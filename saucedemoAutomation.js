@@ -14,7 +14,7 @@ async function saucedemoLogin() {
 
         //mengakses website Saucedemo
         await driver.get("https://www.saucedemo.com/");
-        await driver.sleep(1000);
+        await driver.sleep(2000);
 
         //menginputkan username dan password
         await driver.findElement(By.id('user-name')).sendKeys('standard_user');
