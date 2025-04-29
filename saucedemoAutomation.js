@@ -29,7 +29,7 @@ async function saucedemoLogin() {
     await driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
 
     // melakukan validasi apakah produk berhasil ditambahkan ke keranjang
-    let cart = await driver.findElement(By.css(".shopping_cart_badge"));
+    let cart = await driver.findElement(By.css(".shopping_cart_link"));
     assert.strictEqual(
       await cart.isDisplayed(),
       true,
