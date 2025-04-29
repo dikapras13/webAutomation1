@@ -1,46 +1,44 @@
-const {
-    Builder,
-    By,
-    Key,
-    until,
-} = require("selenium-webdriver");
-const assert = require('assert');
+const { Builder, By, Key, until } = require("selenium-webdriver");
+const assert = require("assert");
 
 async function saucedemoLogin() {
+  let driver = await new Builder().forBrowser("chrome").build();
+  await driver.manage().window().maximize();
+  try {
+    //mengakses website Saucedemo
+    await driver.get("https://www.saucedemo.com/");
+    await driver.sleep(2000);
 
-    let driver = await new Builder().forBrowser("chrome").build();
-    await driver.manage().window().maximize();
-    try {
+    //menginputkan username dan password
+    await driver.findElement(By.id("user-name")).sendKeys("standard_user");
+    await driver.findElement(By.id("password")).sendKeys("secret_sauce");
 
-        //mengakses website Saucedemo
-        await driver.get("https://www.saucedemo.com/");
-        await driver.sleep(2000);
+    //klik tombol login
+    await driver.findElement(By.id("login-button")).click();
 
-        //menginputkan username dan password
-        await driver.findElement(By.id('user-name')).sendKeys('standard_user');
-        await driver.findElement(By.id('password')).sendKeys('secret_sauce');
+    // validasi apakah sudah berhasil menampilkan halaman dashboard
+    let titleText = await driver.findElement(By.css(".app_logo")).getText();
+    assert.strictEqual(
+      titleText.includes("Swag Lab"),
+      true,
+      "Title Does not include Swag Labs"
+    );
+    await driver.sleep(5000);
 
-        //klik tombol login
-        await driver.findElement(By.id('login-button')).click();
+    // menambahkan produk ke keranjang
+    await driver.findElement(By.id("add-to-cart-sauce-labs-backpack")).click();
 
-        // validasi apakah sudah berhasil menampilkan halaman dashboard
-        let titleText = await driver.findElement(By.css('.app_logo')).getText();
-        assert.strictEqual(titleText.includes('Swag Lab'), true, "Title Does not include Swag Labs");
-        await driver.sleep(5000);
-
-        // menambahkan produk ke keranjang
-        await driver.findElement(By.id('add-to-cart-sauce-labs-backpack')).click();
-
-        // melakukan validasi apakah produk berhasil ditambahkan ke keranjang
-        let cart = await driver.findElement(By.css('.shopping_cart_badge'));
-        assert.strictEqual(await cart.isDisplayed(), true, "You haven't selected a product yet");
-        await driver.sleep(10000);
-
-
-    } finally {
-        await driver.quit();
-    }
-
+    // melakukan validasi apakah produk berhasil ditambahkan ke keranjang
+    let cart = await driver.findElement(By.css(".shopping_cart_badge"));
+    assert.strictEqual(
+      await cart.isDisplayed(),
+      true,
+      "You haven't selected a product yet"
+    );
+    await driver.sleep(10000);
+  } finally {
+    await driver.quit();
+  }
 }
 
 saucedemoLogin();
