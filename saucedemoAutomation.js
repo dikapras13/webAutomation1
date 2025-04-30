@@ -35,12 +35,11 @@ async function saucedemoLogin() {
       true,
       "You haven't selected a product yet"
     );
-    let title = await driver.getTitle();
-    console.log(`Test case add to cart berhasil | ${title}`);
-
     await driver.sleep(10000);
 
   } finally {
+    let title = await driver.getTitle();
+    console.log(`Test case add to cart berhasil | ${title}`);
     await driver.quit();
   }
 }
