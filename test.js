@@ -33,7 +33,7 @@ async function exampleTest() {
 
         //simulasi user behavior
         await searchBox.sendKeys("Hello World", Key.RETURN);
-        await driver.wait(until.elementsLocated(By.id("result-states")), 10000); // menunggu sampai elemen yang diingikan ditemukan 
+        await driver.wait(until.elementsLocated(By.id("hdr")), 10000); // menunggu sampai elemen yang diingikan ditemukan 
 
         let title = await driver.getTitle();
         console.log(`Page titile is : ${title}`);

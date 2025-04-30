@@ -2,7 +2,7 @@ const { Builder, By, Key, until } = require("selenium-webdriver");
 const assert = require("assert");
 
 async function saucedemoLogin() {
-  let driver = await new Builder().forBrowser("chrome").build();
+  let driver = await new Builder().forBrowser("firefox").build();
   await driver.manage().window().maximize();
   try {
     //mengakses website Saucedemo
@@ -35,7 +35,11 @@ async function saucedemoLogin() {
       true,
       "You haven't selected a product yet"
     );
+    let title = await driver.getTitle();
+    console.log(`Test case add to cart berhasil | ${title}`);
+
     await driver.sleep(10000);
+
   } finally {
     await driver.quit();
   }
